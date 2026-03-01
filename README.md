@@ -474,6 +474,26 @@ This is Part 10 of a 10-part series on agentic development:
 
 ---
 
+## Troubleshooting
+
+### `pip install -e .` fails
+Ensure Python 3.10+ and that hatchling is available: `pip install hatchling` first if needed.
+
+### `ai-dev-os` command not found
+The entry point is `ai-dev-os` (with hyphens). Install in a virtual environment: `python -m venv .venv && source .venv/bin/activate && pip install -e .`
+
+### `ai-dev-os team run` produces template output
+The team pipeline stages demonstrate the orchestration architecture. For production use, implement actual Claude CLI subprocess calls in `team_pipeline/stages.py` by replacing the `_run_*` helper methods with `subprocess.run(["claude", "--print", ...])` calls.
+
+### Claude CLI not found
+Install Claude Code: `npm install -g @anthropic-ai/claude-code`. The ralph, spec, and team commands spawn Claude as a subprocess.
+
+### Agent catalog shows wrong count
+The catalog loads from `catalog.yaml`. If you've added custom agents, run `ai-dev-os catalog list` to verify the current count.
+
+### Rich output not displaying correctly
+Ensure your terminal supports ANSI colors. In CI, set `FORCE_COLOR=1` or use `--no-color` if Rich formatting is garbled.
+
 ## License
 
 MIT — see [LICENSE](LICENSE)
