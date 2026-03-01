@@ -1,0 +1,28 @@
+flowchart TD
+    subgraph BASE[Base Layer]
+        OMC["OMC\n25 specialized agents\n(Build / Review / Domain / Coordination lanes)"]
+    end
+
+    subgraph PERSIST[Persistence Layer]
+        RALPH["Ralph Loop\nSession persistence\n(survives session boundaries)"]
+    end
+
+    subgraph ORCHESTRATORS[Workflow Orchestrators]
+        SPECUM["Specum Pipeline\nSpec-driven development"]
+        RALPLAN["RALPLAN\nAdversarial planning"]
+        GSD["GSD\nProject lifecycle"]
+        TEAM["Team Pipeline\nMulti-agent coordination"]
+    end
+
+    BASE --> PERSIST
+    PERSIST --> ORCHESTRATORS
+
+    OMC -->|provides agents| SPECUM
+    OMC -->|provides agents| RALPLAN
+    OMC -->|provides agents| GSD
+    OMC -->|provides agents| TEAM
+
+    RALPH -->|provides persistence| SPECUM
+    RALPH -->|provides persistence| RALPLAN
+    RALPH -->|provides persistence| GSD
+    RALPH -->|provides persistence| TEAM

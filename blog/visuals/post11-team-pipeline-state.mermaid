@@ -1,0 +1,11 @@
+stateDiagram-v2
+    [*] --> PLAN
+    PLAN --> PRD
+    PRD --> EXEC
+    EXEC --> VERIFY
+    VERIFY --> COMPLETE : all pass
+    VERIFY --> FIX : issues found
+    FIX --> VERIFY : fixed
+    FIX --> FAILED : max retries exceeded 3x
+    COMPLETE --> [*]
+    FAILED --> [*]

@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant User
+    participant Planner
+    participant Architect
+    participant Critic
+
+    User->>Planner: Submit task
+
+    Planner->>Planner: Create initial plan
+
+    Planner->>Critic: Submit plan for review
+
+    Critic->>Planner: REJECT - findings(completeness, feasibility, hand-waving, risk)
+
+    Planner->>Planner: Revise plan incorporating findings
+
+    Planner->>Critic: Resubmit revised plan
+
+    Note over Planner,Critic: Loop continues up to MAX_ITERATIONS = 5
+
+    Critic->>Planner: APPROVE
+
+    Planner->>User: Return final plan
