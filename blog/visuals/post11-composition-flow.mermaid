@@ -1,0 +1,81 @@
+flowchart TD
+    subgraph INPUT["Feature Request"]
+        REQ["'Add payment processing\nwith Stripe integration'"]
+    end
+
+    subgraph RALPLAN_PHASE["1. RALPLAN — Adversarial Planning"]
+        P1["Planner (opus)\nCreate initial plan:\n4 phases, 14 tasks"]
+        C1["Critic (opus)\nREJECT: hand-waving in\nTask 2.3, no spike task"]
+        P2["Planner (opus)\nRevise: add spike,\nconcretize descriptions"]
+        C2["Critic (opus)\nAPPROVE: 4 phases,\n15 tasks, 3 risks"]
+    end
+
+    subgraph SPECUM_PHASE["2. Specum — Specification Pipeline"]
+        S1["RequirementsStage\n(ProductManagerAgent)\nrequirements.md"]
+        S2["DesignStage\n(ArchitectAgent)\ndesign.md + API contract"]
+        S3["TaskStage\n(TaskPlannerAgent)\ntasks.md — 15 ordered tasks"]
+    end
+
+    subgraph TEAM_PHASE["3. Team Pipeline — Multi-Agent Execution"]
+        direction TB
+        TP["PLAN stage\nexplore (haiku) + planner (opus)"]
+        TPRD["PRD stage\nanalyst (opus)"]
+        TEXEC["EXEC stage\nexecutor (sonnet) x3\ndesigner (sonnet) x1"]
+        TVERIFY["VERIFY stage\nverifier (sonnet)\nsecurity-reviewer (sonnet)"]
+        TFIX["FIX stage\nbuild-fixer (sonnet)\nLoop 1 of 3"]
+        TVERIFY2["VERIFY stage (re-run)\nverifier (sonnet)\nPASS"]
+    end
+
+    subgraph RALPH_PHASE["4. Ralph Loop — Persistent Execution"]
+        R1["Iteration 1-5:\nPhase 1 tasks (Foundation)"]
+        R2["Iteration 6-10:\nPhase 2 tasks (Core Logic)"]
+        R3["Iteration 11-14:\nPhase 3 tasks (API Layer)"]
+        R4["Iteration 15:\nSession boundary — state persisted"]
+        R5["New session resumes at\niteration 16 from disk"]
+        R6["Iteration 16-20:\nPhase 4 tasks (Integration)"]
+    end
+
+    subgraph GSD_PHASE["5. GSD — Evidence-Gated Lifecycle"]
+        G1["RESEARCH phase\nevidence: feasibility doc"]
+        G2["EXECUTE phase\nevidence: build log,\nimplementation report"]
+        G3["VERIFY phase\nevidence: verification report,\nacceptance criteria results"]
+        G4["INTEGRATION phase\nevidence: e2e scenario,\nload test results"]
+        G5["COMPLETE\nfinal report with\n12 evidence artifacts"]
+    end
+
+    subgraph OMC_LAYER["OMC Agent Catalog (25 agents across all stages)"]
+        OMC_NOTE["explore, planner, architect, executor,\ndesigner, verifier, critic, build-fixer,\nsecurity-reviewer, code-reviewer, writer..."]
+    end
+
+    REQ --> P1
+    P1 --> C1
+    C1 -->|REJECT| P2
+    P2 --> C2
+    C2 -->|APPROVE| S1
+
+    S1 --> S2
+    S2 --> S3
+    S3 --> TP
+
+    TP --> TPRD
+    TPRD --> TEXEC
+    TEXEC --> TVERIFY
+    TVERIFY -->|FAIL: build error| TFIX
+    TFIX --> TVERIFY2
+    TVERIFY2 -->|PASS| R1
+
+    R1 --> R2
+    R2 --> R3
+    R3 --> R4
+    R4 -.->|session boundary| R5
+    R5 --> R6
+    R6 --> G1
+
+    G1 -->|evidence gate| G2
+    G2 -->|evidence gate| G3
+    G3 -->|evidence gate| G4
+    G4 -->|evidence gate| G5
+
+    OMC_LAYER -.->|provides agents| RALPLAN_PHASE
+    OMC_LAYER -.->|provides agents| TEAM_PHASE
+    OMC_LAYER -.->|provides agents| SPECUM_PHASE
